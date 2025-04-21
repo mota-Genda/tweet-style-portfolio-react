@@ -29,7 +29,7 @@ const HeroSection = () => {
   ];
 
   return (
-    <section id="home" className="min-h-screen pt-20 flex items-center bg-secondary/30">
+    <section id="home" className="min-h-screen pt-20 flex items-center bg-background">
       <div className="container-section">
         <div className="grid md:grid-cols-2 gap-10 items-center">
           <div className="order-2 md:order-1 animate-fade-in">
@@ -39,7 +39,7 @@ const HeroSection = () => {
             <h2 className="text-xl md:text-2xl text-muted-foreground mb-6">
               Frontend Developer & UX Designer
             </h2>
-            <p className="text-lg mb-8 max-w-lg">
+            <p className="text-lg mb-8 max-w-lg text-muted-foreground">
               I build beautiful, interactive web experiences with modern
               technologies. Passionate about creating clean, user-friendly
               interfaces.
@@ -53,7 +53,7 @@ const HeroSection = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={link.label}
-                  className="social-icon"
+                  className="hover:bg-accent p-2 rounded-lg transition-colors"
                 >
                   {link.icon}
                 </a>
@@ -69,7 +69,7 @@ const HeroSection = () => {
           </div>
 
           <div className="order-1 md:order-2 animate-fade-in">
-            <div className="rounded-2xl overflow-hidden shadow-xl border border-border">
+            <div className="rounded-xl overflow-hidden shadow-xl bg-card">
               <video
                 className="w-full aspect-video object-cover"
                 controls
