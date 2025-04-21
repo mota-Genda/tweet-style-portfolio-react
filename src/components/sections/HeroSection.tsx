@@ -1,7 +1,7 @@
-
 import React from "react";
 import { Github, Linkedin, Twitter, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useParallax } from "@/hooks/useParallax";
 
 interface SocialLink {
   icon: React.ReactNode;
@@ -10,6 +10,8 @@ interface SocialLink {
 }
 
 const HeroSection = () => {
+  const scrollY = useParallax();
+  
   const socialLinks: SocialLink[] = [
     {
       icon: <Github size={20} />,
@@ -29,11 +31,31 @@ const HeroSection = () => {
   ];
 
   return (
-    <section id="home" className="min-h-screen pt-20 flex items-center bg-secondary/30">
-      <div className="container-section">
+    <section 
+      id="home" 
+      className="min-h-screen pt-20 flex items-center relative overflow-hidden"
+      style={{
+        background: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.3))`,
+      }}
+    >
+      <div 
+        className="absolute inset-0 -z-10"
+        style={{
+          transform: `translateY(${scrollY * 0.5}px)`,
+          backgroundImage: 'url("/placeholder.svg")',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          willChange: 'transform'
+        }}
+      />
+      
+      <div className="container-section relative z-10">
         <div className="grid md:grid-cols-2 gap-10 items-center">
-          <div className="order-2 md:order-1 animate-fade-in">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-4">
+          <div className="order-2 md:order-1 animate-fade-in backdrop-blur-sm bg-background/30 p-6 rounded-xl border border-primary/10">
+            <h1 
+              className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-4"
+              style={{ transform: `translateY(${scrollY * 0.1}px)` }}
+            >
               Hi, I'm <span className="text-primary">Your Name</span>
             </h1>
             <h2 className="text-xl md:text-2xl text-muted-foreground mb-6">
@@ -68,8 +90,11 @@ const HeroSection = () => {
             </div>
           </div>
 
-          <div className="order-1 md:order-2 animate-fade-in">
-            <div className="rounded-2xl overflow-hidden shadow-xl border border-border">
+          <div 
+            className="order-1 md:order-2 animate-fade-in"
+            style={{ transform: `translateY(${scrollY * 0.2}px)` }}
+          >
+            <div className="rounded-2xl overflow-hidden shadow-xl border border-border backdrop-blur-sm bg-background/30">
               <video
                 className="w-full aspect-video object-cover"
                 controls

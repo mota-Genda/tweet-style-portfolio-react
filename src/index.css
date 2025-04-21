@@ -93,7 +93,7 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground overflow-x-hidden;
   }
 }
 
@@ -147,5 +147,27 @@
   .animate-slide-in {
     opacity: 1 !important;
     transform: translateX(0) !important;
+  }
+
+  .parallax-section {
+    @apply relative overflow-hidden;
+    transform-style: preserve-3d;
+    perspective: 1000px;
+  }
+
+  .glass-card {
+    @apply backdrop-blur-sm bg-background/30 border border-primary/10 rounded-xl shadow-lg;
+  }
+
+  .parallax-content {
+    @apply relative z-10;
+    transform: translateZ(0);
+    will-change: transform;
+  }
+
+  .parallax-bg {
+    @apply absolute inset-0 -z-10;
+    transform: translateZ(-10px) scale(2);
+    will-change: transform;
   }
 }
