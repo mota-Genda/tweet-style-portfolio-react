@@ -1,9 +1,11 @@
+
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Menu, X, Moon, Sun } from "lucide-react";
 import { scrollToElement } from "@/utils/scrollUtils";
 import { useTheme } from "@/themes/useTheme";
 import { Toggle } from "@/components/ui/toggle";
+import { Switch } from "@/components/ui/switch";
 
 const Navbar = () => {
   const { theme, setTheme } = useTheme();
@@ -40,6 +42,10 @@ const Navbar = () => {
   const handleNavClick = (sectionId: string) => {
     scrollToElement(sectionId);
     setIsMenuOpen(false);
+  };
+
+  const toggleTheme = () => {
+    setTheme(theme === "light" ? "dark" : "light");
   };
 
   const navItems = [
@@ -79,33 +85,28 @@ const Navbar = () => {
               </button>
             ))}
             
-            <Toggle
-              pressed={theme === "dark"}
-              onPressedChange={(pressed) => setTheme(pressed ? "dark" : "light")}
-              aria-label="Toggle theme"
-              className="ml-4"
-            >
-              {theme === "dark" ? (
-                <Sun className="h-4 w-4" />
-              ) : (
-                <Moon className="h-4 w-4" />
-              )}
-            </Toggle>
+            <div className="flex items-center space-x-2">
+              <Sun className={`h-4 w-4 ${theme === 'dark' ? 'text-muted-foreground' : 'text-primary'}`} />
+              <Switch 
+                checked={theme === "dark"}
+                onCheckedChange={toggleTheme}
+                aria-label="Toggle theme"
+              />
+              <Moon className={`h-4 w-4 ${theme === 'light' ? 'text-muted-foreground' : 'text-primary'}`} />
+            </div>
           </div>
 
           {/* Mobile Navigation Toggle */}
           <div className="md:hidden flex items-center space-x-4">
-            <Toggle
-              pressed={theme === "dark"}
-              onPressedChange={(pressed) => setTheme(pressed ? "dark" : "light")}
-              aria-label="Toggle theme"
-            >
-              {theme === "dark" ? (
-                <Sun className="h-4 w-4" />
-              ) : (
-                <Moon className="h-4 w-4" />
-              )}
-            </Toggle>
+            <div className="flex items-center space-x-2">
+              <Sun className={`h-4 w-4 ${theme === 'dark' ? 'text-muted-foreground' : 'text-primary'}`} />
+              <Switch 
+                checked={theme === "dark"}
+                onCheckedChange={toggleTheme}
+                aria-label="Toggle theme"
+              />
+              <Moon className={`h-4 w-4 ${theme === 'light' ? 'text-muted-foreground' : 'text-primary'}`} />
+            </div>
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               aria-label={isMenuOpen ? "Close menu" : "Open menu"}
@@ -121,7 +122,7 @@ const Navbar = () => {
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="md:hidden absolute top-full left-0 right-0 bg-white shadow-md animate-fade-in">
+          <div className="md:hidden absolute top-full left-0 right-0 bg-background shadow-md animate-fade-in">
             <div className="flex flex-col space-y-4 p-6">
               {navItems.map((item) => (
                 <button

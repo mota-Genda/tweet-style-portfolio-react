@@ -1,5 +1,8 @@
-import React, { useEffect, useRef } from "react";
+
+import React, { useEffect, useRef, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface Experience {
   id: number;
@@ -12,6 +15,7 @@ interface Experience {
 
 const ExperienceSection = () => {
   const timelineRef = useRef<HTMLDivElement>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -78,10 +82,18 @@ const ExperienceSection = () => {
     }
   ];
 
+  const navigateExperience = (direction: 'prev' | 'next') => {
+    if (direction === 'prev' && activeIndex > 0) {
+      setActiveIndex(activeIndex - 1);
+    } else if (direction === 'next' && activeIndex < experiences.length - 1) {
+      setActiveIndex(activeIndex + 1);
+    }
+  };
+
   return (
     <section id="experience" className="bg-white dark:bg-background">
       <div className="container-section">
-        <h2 className="section-title">Experience</h2>
+        <h2 className="section-title font-playfair">Experience</h2>
         <p className="max-w-3xl mb-12 text-muted-foreground text-lg">
           My professional journey has equipped me with valuable skills and 
           experiences in software development.
@@ -95,20 +107,20 @@ const ExperienceSection = () => {
               key={experience.id} 
               className={`relative mb-16 timeline-item opacity-0 translate-x-[-100px] ${
                 index % 2 === 0 ? "md:ml-auto md:pr-0 md:pl-10" : "md:mr-auto md:pl-0 md:pr-10"
-              } md:w-1/2`}
+              } md:w-1/2 ${index === activeIndex ? "z-10" : "opacity-70"}`}
             >
               <div className="hidden md:block absolute top-6 -right-6 w-6 h-0.5 bg-muted"></div>
               <div className="hidden md:block absolute top-6 -left-6 w-6 h-0.5 bg-muted"></div>
               
               <div className={`absolute top-6 ${
                 index % 2 === 0 ? "md:-left-3 -left-3" : "md:-right-3 -left-3"
-              } h-6 w-6 rounded-full bg-primary flex items-center justify-center shadow-md`}>
+              } h-6 w-6 rounded-full ${index === activeIndex ? "bg-primary" : "bg-muted"} flex items-center justify-center shadow-md transition-colors duration-300`}>
                 <div className="h-2 w-2 rounded-full bg-white"></div>
               </div>
               
-              <Card className="card-hover">
+              <Card className={`card-hover ${index === activeIndex ? "border-primary shadow-lg" : ""}`}>
                 <CardContent className="p-6">
-                  <h3 className="text-xl font-semibold text-primary">{experience.role}</h3>
+                  <h3 className="text-xl font-semibold text-primary font-playfair">{experience.role}</h3>
                   <div className="flex flex-col sm:flex-row sm:justify-between mt-1 mb-4">
                     <p className="font-medium">{experience.company}</p>
                     <p className="text-muted-foreground">{experience.duration}</p>
@@ -123,6 +135,27 @@ const ExperienceSection = () => {
               </Card>
             </div>
           ))}
+          
+          <div className="flex justify-center mt-8 space-x-4">
+            <Button 
+              variant="outline" 
+              size="sm" 
+              onClick={() => navigateExperience('prev')}
+              disabled={activeIndex === 0}
+              className="rounded-full"
+            >
+              <ChevronLeft className="mr-1 h-4 w-4" /> Previous
+            </Button>
+            <Button 
+              variant="outline" 
+              size="sm" 
+              onClick={() => navigateExperience('next')}
+              disabled={activeIndex === experiences.length - 1}
+              className="rounded-full"
+            >
+              Next <ChevronRight className="ml-1 h-4 w-4" />
+            </Button>
+          </div>
         </div>
       </div>
     </section>

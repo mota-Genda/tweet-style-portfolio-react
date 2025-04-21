@@ -33,7 +33,7 @@ const HeroSection = () => {
       <div className="container-section">
         <div className="grid md:grid-cols-2 gap-10 items-center">
           <div className="order-2 md:order-1 animate-fade-in">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-4">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-4 font-playfair">
               Hi, I'm <span className="text-primary">Your Name</span>
             </h1>
             <h2 className="text-xl md:text-2xl text-muted-foreground mb-6">

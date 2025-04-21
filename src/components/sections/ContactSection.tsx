@@ -69,30 +69,30 @@ const ContactSection = () => {
   return (
     <section id="contact" className="bg-secondary/30">
       <div className="container-section">
-        <h2 className="section-title">Contact Me</h2>
-        <p className="max-w-3xl mb-12 text-muted-foreground text-lg">
+        <h2 className="section-title font-playfair">Contact Me</h2>
+        <p className="max-w-3xl mb-12 text-muted-foreground text-lg font-medium">
           Have a question or want to work together? Fill out the form below and I'll get back to you as soon as possible.
         </p>
 
         <div className="grid md:grid-cols-2 gap-10">
           <div className="animate-fade-in">
-            <h3 className="text-xl font-semibold mb-4">Get In Touch</h3>
-            <p className="mb-8 text-muted-foreground">
+            <h3 className="text-xl font-semibold mb-4 font-playfair">Get In Touch</h3>
+            <p className="mb-8 text-foreground">
               I'm currently available for freelance work, full-time positions, or just to chat about interesting projects. 
               Send me a message and let's start a conversation!
             </p>
 
             <div className="space-y-6">
               <div>
-                <h4 className="font-medium text-lg">Email</h4>
-                <p className="text-primary">hello@yourportfolio.com</p>
+                <h4 className="font-medium text-lg font-playfair">Email</h4>
+                <p className="text-primary font-medium">hello@yourportfolio.com</p>
               </div>
               <div>
-                <h4 className="font-medium text-lg">Based in</h4>
-                <p>San Francisco, CA</p>
+                <h4 className="font-medium text-lg font-playfair">Based in</h4>
+                <p className="text-foreground">San Francisco, CA</p>
               </div>
               <div>
-                <h4 className="font-medium text-lg">Follow Me</h4>
+                <h4 className="font-medium text-lg font-playfair">Follow Me</h4>
                 <div className="flex space-x-4 mt-2">
                   <a href="https://twitter.com/username" className="social-icon" aria-label="Twitter">
                     <svg
@@ -155,9 +155,9 @@ const ContactSection = () => {
                   name="name"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Name</FormLabel>
+                      <FormLabel className="text-foreground font-medium">Name</FormLabel>
                       <FormControl>
-                        <Input placeholder="Your name" {...field} />
+                        <Input placeholder="Your name" {...field} className="text-foreground" />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -169,9 +169,9 @@ const ContactSection = () => {
                   name="email"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Email</FormLabel>
+                      <FormLabel className="text-foreground font-medium">Email</FormLabel>
                       <FormControl>
-                        <Input placeholder="Your email" type="email" {...field} />
+                        <Input placeholder="Your email" type="email" {...field} className="text-foreground" />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -183,12 +183,13 @@ const ContactSection = () => {
                   name="message"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Message</FormLabel>
+                      <FormLabel className="text-foreground font-medium">Message</FormLabel>
                       <FormControl>
                         <Textarea
                           placeholder="How can I help you?"
                           rows={5}
                           {...field}
+                          className="text-foreground"
                         />
                       </FormControl>
                       <FormMessage />
