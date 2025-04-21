@@ -1,10 +1,12 @@
-
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Moon, Sun } from "lucide-react";
 import { scrollToElement } from "@/utils/scrollUtils";
+import { useTheme } from "@/themes/useTheme";
+import { Toggle } from "@/components/ui/toggle";
 
 const Navbar = () => {
+  const { theme, setTheme } = useTheme();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
@@ -51,20 +53,20 @@ const Navbar = () => {
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? "bg-white shadow-md py-3" : "bg-transparent py-5"
+        scrolled ? "bg-background shadow-md py-3" : "bg-background/50 backdrop-blur-sm py-5"
       }`}
     >
       <div className="container-section py-0">
         <div className="flex items-center justify-between">
           <Link
             to="/"
-            className="text-xl font-bold text-primary hover:text-primary/80 transition-colors"
+            className="text-xl font-bold text-primary hover:text-primary/80 transition-colors font-playfair"
           >
             Portfolio
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex space-x-8">
+          <div className="hidden md:flex items-center space-x-8">
             {navItems.map((item) => (
               <button
                 key={item.id}
@@ -76,20 +78,45 @@ const Navbar = () => {
                 {item.label}
               </button>
             ))}
+            
+            <Toggle
+              pressed={theme === "dark"}
+              onPressedChange={(pressed) => setTheme(pressed ? "dark" : "light")}
+              aria-label="Toggle theme"
+              className="ml-4"
+            >
+              {theme === "dark" ? (
+                <Sun className="h-4 w-4" />
+              ) : (
+                <Moon className="h-4 w-4" />
+              )}
+            </Toggle>
           </div>
 
           {/* Mobile Navigation Toggle */}
-          <button
-            className="md:hidden"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-          >
-            {isMenuOpen ? (
-              <X className="h-6 w-6 text-foreground" />
-            ) : (
-              <Menu className="h-6 w-6 text-foreground" />
-            )}
-          </button>
+          <div className="md:hidden flex items-center space-x-4">
+            <Toggle
+              pressed={theme === "dark"}
+              onPressedChange={(pressed) => setTheme(pressed ? "dark" : "light")}
+              aria-label="Toggle theme"
+            >
+              {theme === "dark" ? (
+                <Sun className="h-4 w-4" />
+              ) : (
+                <Moon className="h-4 w-4" />
+              )}
+            </Toggle>
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+            >
+              {isMenuOpen ? (
+                <X className="h-6 w-6 text-foreground" />
+              ) : (
+                <Menu className="h-6 w-6 text-foreground" />
+              )}
+            </button>
+          </div>
         </div>
 
         {/* Mobile Menu */}

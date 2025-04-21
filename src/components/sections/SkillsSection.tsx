@@ -1,10 +1,9 @@
-
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 
 interface Skill {
   name: string;
-  level: number; // 0-100
+  level: number;
   icon: string;
   category: "frontend" | "backend" | "design" | "other";
 }
@@ -85,7 +84,6 @@ const SkillsSection = () => {
     },
   ];
 
-  // Group skills by category
   const groupedSkills: Record<string, Skill[]> = skills.reduce(
     (acc, skill) => {
       const { category } = skill;
@@ -105,6 +103,30 @@ const SkillsSection = () => {
     other: "Other Skills",
   };
 
+  const skillsRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const progressBars = entry.target.querySelectorAll(".progress-bar");
+            progressBars.forEach((bar) => {
+              bar.classList.add("animate-progress");
+            });
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    if (skillsRef.current) {
+      observer.observe(skillsRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <section id="skills" className="bg-secondary/30">
       <div className="container-section">
@@ -114,7 +136,7 @@ const SkillsSection = () => {
           overview of my technical skills and proficiency levels.
         </p>
 
-        <div className="grid gap-8">
+        <div className="grid gap-8" ref={skillsRef}>
           {Object.entries(groupedSkills).map(([category, skills]) => (
             <div key={category}>
               <h3 className="text-xl font-semibold mb-6">
@@ -128,10 +150,10 @@ const SkillsSection = () => {
                         <span className="text-2xl mr-3">{skill.icon}</span>
                         <h4 className="text-lg font-medium">{skill.name}</h4>
                       </div>
-                      <div className="w-full bg-muted rounded-full h-2.5">
+                      <div className="w-full bg-muted rounded-full h-2.5 overflow-hidden">
                         <div
-                          className="bg-primary h-2.5 rounded-full transition-all duration-1000 ease-out"
-                          style={{ width: `${skill.level}%` }}
+                          className="bg-primary h-2.5 rounded-full transition-all duration-1000 ease-out progress-bar w-0"
+                          style={{ "--target-width": `${skill.level}%` } as any}
                         ></div>
                       </div>
                       <div className="flex justify-between text-sm mt-2">

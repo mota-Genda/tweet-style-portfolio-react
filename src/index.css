@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -127,5 +129,23 @@
   
   .form-input {
     @apply w-full border-border rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-primary;
+  }
+
+  .progress-bar {
+    width: 0;
+    transition: width 1.5s ease-out;
+  }
+
+  .animate-progress {
+    width: var(--target-width) !important;
+  }
+
+  .timeline-item {
+    transition: all 0.6s ease-out;
+  }
+
+  .animate-slide-in {
+    opacity: 1 !important;
+    transform: translateX(0) !important;
   }
 }

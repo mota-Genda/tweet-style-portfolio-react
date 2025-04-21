@@ -1,5 +1,4 @@
-
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 
 interface Experience {
@@ -12,6 +11,31 @@ interface Experience {
 }
 
 const ExperienceSection = () => {
+  const timelineRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("animate-slide-in");
+          }
+        });
+      },
+      {
+        threshold: 0.1,
+        rootMargin: "-50px",
+      }
+    );
+
+    const items = document.querySelectorAll(".timeline-item");
+    items.forEach((item) => {
+      observer.observe(item);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
   const experiences: Experience[] = [
     {
       id: 1,
@@ -55,7 +79,7 @@ const ExperienceSection = () => {
   ];
 
   return (
-    <section id="experience" className="bg-white">
+    <section id="experience" className="bg-white dark:bg-background">
       <div className="container-section">
         <h2 className="section-title">Experience</h2>
         <p className="max-w-3xl mb-12 text-muted-foreground text-lg">
@@ -63,16 +87,15 @@ const ExperienceSection = () => {
           experiences in software development.
         </p>
 
-        <div className="relative max-w-4xl mx-auto">
+        <div className="relative max-w-4xl mx-auto" ref={timelineRef}>
           <div className="absolute top-0 bottom-0 left-6 md:left-1/2 w-0.5 bg-muted -ml-px md:ml-0"></div>
 
           {experiences.map((experience, index) => (
             <div 
               key={experience.id} 
-              className={`relative mb-16 ${
+              className={`relative mb-16 timeline-item opacity-0 translate-x-[-100px] ${
                 index % 2 === 0 ? "md:ml-auto md:pr-0 md:pl-10" : "md:mr-auto md:pl-0 md:pr-10"
-              } md:w-1/2 animate-fade-in`}
-              style={{ animationDelay: `${index * 0.2}s` }}
+              } md:w-1/2`}
             >
               <div className="hidden md:block absolute top-6 -right-6 w-6 h-0.5 bg-muted"></div>
               <div className="hidden md:block absolute top-6 -left-6 w-6 h-0.5 bg-muted"></div>
