@@ -32,7 +32,7 @@ const HeroSection = () => {
     <section id="home" className="min-h-screen pt-20 flex items-center bg-background">
       <div className="container-section">
         <div className="grid md:grid-cols-2 gap-10 items-center">
-          <div className="order-2 md:order-1 animate-fade-in">
+          <div className="animate-fade-in">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-4 font-playfair">
               Hi, I'm <span className="text-primary">Your Name</span>
             </h1>
@@ -68,7 +68,7 @@ const HeroSection = () => {
             </div>
           </div>
 
-          <div className="order-1 md:order-2 animate-fade-in">
+          <div className="animate-fade-in">
             <div className="rounded-xl overflow-hidden shadow-xl bg-card">
               <video
                 className="w-full aspect-video object-cover"
