@@ -10,6 +10,7 @@ import NotFound from "./pages/NotFound";
 import { useTheme } from "./themes/useTheme";
 
 const App = () => {
+  // Create a new QueryClient inside the component to avoid SSR/hydration issues
   const [queryClient] = useState(() => new QueryClient());
   const { theme } = useTheme();
 
